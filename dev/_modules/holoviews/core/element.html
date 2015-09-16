@@ -258,7 +258,7 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Pass reduced dimensions either as an argument&quot;</span>
                             <span class="s">&quot;or as part of the kwargs not both.&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">dimensions</span><span class="p">:</span>
-            <span class="n">reduce_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">function</span><span class="p">}</span>
+            <span class="n">reduce_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="p">:</span> <span class="n">function</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">}</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="n">reduce_map</span><span class="p">:</span>
             <span class="n">reduce_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="p">:</span> <span class="n">function</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_index_names</span><span class="p">}</span>
         <span class="n">sanitized</span> <span class="o">=</span> <span class="p">{</span><span class="n">sanitize_identifier</span><span class="p">(</span><span class="n">kd</span><span class="p">):</span> <span class="n">kd</span>
@@ -583,12 +583,10 @@
 
 
     <span class="k">def</span> <span class="nf">dimension_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Dimension to be specified by name&#39;</span><span class="p">)</span>
-        <span class="n">value_dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s">&#39;value&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">value_dims</span><span class="p">:</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="n">value_dims</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
-            <span class="k">return</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_value_names</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_value_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">NdMapping</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
 
@@ -624,10 +622,12 @@
 
     <span class="n">data_type</span> <span class="o">=</span> <span class="p">(</span><span class="n">ViewableElement</span><span class="p">,</span> <span class="n">NdMapping</span><span class="p">,</span> <span class="n">Layout</span><span class="p">)</span>
 
-<div class="viewcode-block" id="HoloMap.overlay"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.html#holoviews.core.element.HoloMap.overlay">[docs]</a>    <span class="k">def</span> <span class="nf">overlay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="HoloMap.overlay"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.html#holoviews.core.element.HoloMap.overlay">[docs]</a>    <span class="k">def</span> <span class="nf">overlay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Splits the UniformNdMapping along a specified number of dimensions and</span>
 <span class="sd">        overlays items in the split out Maps.</span>
+
+<span class="sd">        Shows all HoloMap data When no dimensions are specified.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_dimensions</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="p">:</span>
@@ -639,10 +639,12 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">group_type</span><span class="o">=</span><span class="n">NdOverlay</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="HoloMap.grid"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.html#holoviews.core.element.HoloMap.grid">[docs]</a>    <span class="k">def</span> <span class="nf">grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="HoloMap.grid"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.html#holoviews.core.element.HoloMap.grid">[docs]</a>    <span class="k">def</span> <span class="nf">grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        GridSpace takes a list of one or two dimensions, and lays out the containing</span>
 <span class="sd">        Views along these axes in a GridSpace.</span>
+
+<span class="sd">        Shows all HoloMap data When no dimensions are specified.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_dimensions</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="p">:</span>
@@ -651,10 +653,12 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="n">container_type</span><span class="o">=</span><span class="n">GridSpace</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="HoloMap.layout"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.html#holoviews.core.element.HoloMap.layout">[docs]</a>    <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="HoloMap.layout"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.html#holoviews.core.element.HoloMap.layout">[docs]</a>    <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        GridSpace takes a list of one or two dimensions, and lays out the containing</span>
 <span class="sd">        Views along these axes in a GridSpace.</span>
+
+<span class="sd">        Shows all HoloMap data When no dimensions are specified.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_dimensions</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="p">:</span>
