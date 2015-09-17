@@ -139,6 +139,7 @@
 <span class="kn">from</span> <span class="nn">...core</span> <span class="kn">import</span> <span class="n">Store</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">AdjointLayout</span><span class="p">,</span> <span class="n">NdLayout</span><span class="p">,</span> <span class="n">Empty</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">,</span> <span class="n">HoloMap</span>
 <span class="kn">from</span> <span class="nn">...core.options</span> <span class="kn">import</span> <span class="n">Compositor</span>
 <span class="kn">from</span> <span class="nn">...core</span> <span class="kn">import</span> <span class="n">traversal</span>
+<span class="kn">from</span> <span class="nn">...core.util</span> <span class="kn">import</span> <span class="nb">basestring</span>
 <span class="kn">from</span> <span class="nn">..plot</span> <span class="kn">import</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">GenericCompositePlot</span><span class="p">,</span> <span class="n">GenericLayoutPlot</span>
 <span class="kn">from</span> <span class="nn">.renderer</span> <span class="kn">import</span> <span class="n">BokehRenderer</span>
 
@@ -189,8 +190,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s">&#39;plot&#39;</span><span class="p">]</span>
 
+</div>
+    <span class="k">def</span> <span class="nf">_fontsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;fontsize&#39;</span><span class="p">,</span> <span class="n">common</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts integer fontsizes to a string specifying</span>
+<span class="sd">        fontsize in pt.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">BokehPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_fontsize</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">common</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">pt&#39;</span> <span class="o">%</span> <span class="n">v</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">size</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
-</div></div>
+
+</div>
 <div class="viewcode-block" id="GridPlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.plot.GridPlot">[docs]</a><span class="k">class</span> <span class="nc">GridPlot</span><span class="p">(</span><span class="n">BokehPlot</span><span class="p">,</span> <span class="n">GenericCompositePlot</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot a group of elements in a grid layout based on a GridSpace element</span>
