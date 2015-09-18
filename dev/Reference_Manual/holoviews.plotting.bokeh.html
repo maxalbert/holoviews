@@ -138,16 +138,276 @@
 <div class="section" id="annotation-module">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">annotation</span></tt> Module<a class="headerlink" href="#annotation-module" title="Permalink to this headline">¶</a></h2>
 <p class="graphviz">
-<img src="../_images/inheritance-b2613879fc2763747af9c8e14ac191dadcd8507e.png" alt="Inheritance diagram of holoviews.plotting.bokeh.annotation" usemap="#inheritance8849138e9f" class="inheritance"/>
+<img src="../_images/inheritance-3eb34e879123b30a47e4b6054601dd42078f42d8.png" alt="Inheritance diagram of holoviews.plotting.bokeh.annotation" usemap="#inheritance8849138e9f" class="inheritance"/>
 <map id="inheritance8849138e9f" name="inheritance8849138e9f">
-<area shape="rect" id="node4" href="#holoviews.plotting.bokeh.plot.BokehPlot" title="Plotting baseclass for the Bokeh backends, implementing the basic" alt="" coords="519,4,680,18"/>
-<area shape="rect" id="node5" href="holoviews.plotting.html#holoviews.plotting.plot.GenericElementPlot" title="Plotting baseclass to render contents of an Element. Implements" alt="" coords="513,32,686,47"/>
-<area shape="rect" id="node6" href="holoviews.plotting.html#holoviews.plotting.plot.Plot" title="Base class of all Plot classes in HoloViews, designed to be" alt="" coords="184,18,295,32"/>
-<area shape="rect" id="node7" href="holoviews.plotting.html#holoviews.plotting.plot.DimensionedPlot" title="DimensionedPlot implements a number of useful methods" alt="" coords="324,32,485,47"/>
-<area shape="rect" id="node8" title="params(name=String)" alt="" coords="3,18,155,32"/>
+<area shape="rect" id="node3" href="#holoviews.plotting.bokeh.annotation.SplinePlot" title="Draw the supplied Spline annotation (see Spline docstring)." alt="" coords="945,32,1132,47"/>
+<area shape="rect" id="node5" href="#holoviews.plotting.bokeh.plot.BokehPlot" title="Plotting baseclass for the Bokeh backends, implementing the basic" alt="" coords="519,17,680,32"/>
+<area shape="rect" id="node6" href="holoviews.plotting.html#holoviews.plotting.plot.GenericElementPlot" title="Plotting baseclass to render contents of an Element. Implements" alt="" coords="513,46,686,61"/>
+<area shape="rect" id="node7" href="holoviews.plotting.html#holoviews.plotting.plot.Plot" title="Base class of all Plot classes in HoloViews, designed to be" alt="" coords="184,31,295,46"/>
+<area shape="rect" id="node8" href="holoviews.plotting.html#holoviews.plotting.plot.DimensionedPlot" title="DimensionedPlot implements a number of useful methods" alt="" coords="324,46,485,61"/>
+<area shape="rect" id="node9" title="params(name=String)" alt="" coords="3,31,155,46"/>
 </map>
 </p>
-<span class="target" id="module-holoviews.plotting.bokeh.annotation"></span></div>
+<span class="target" id="module-holoviews.plotting.bokeh.annotation"></span><dl class="class">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot">
+<em class="property">class </em><tt class="descclassname">holoviews.plotting.bokeh.annotation.</tt><tt class="descname">SplinePlot</tt><big>(</big><em>element</em>, <em>plot=None</em>, <em>**params</em><big>)</big><a class="reference internal" href="../_modules/holoviews/plotting/bokeh/annotation.html#SplinePlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">holoviews.plotting.bokeh.element.ElementPlot</span></tt></p>
+<p>Draw the supplied Spline annotation (see Spline docstring).
+Does not support matplotlib Path codes.</p>
+<dl class="docutils">
+<dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">xrotation</span></tt> (<em>allow_None=True, bounds=(0, 360), constant=False, default=None, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_dependent=False, time_fn=&lt;Time Time00001&gt;</em>)</dt>
+<dd>Rotation angle of the xticks.</dd>
+</dl>
+<p><em>param ObjectSelector</em> <tt class="docutils literal"><span class="pre">projection</span></tt> (<em>allow_None=None, check_on_set=False, compute_default_fn=None, constant=False, default=None, instantiate=False, objects=[], pickle_default_value=True, precedence=None, readonly=False</em>)</p>
+<dl class="docutils">
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">xlog</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether the x-axis of the plot will be a log axis.</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">ylog</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether the x-axis of the plot will be a log axis.</dd>
+<dt><em>param List</em> <tt class="docutils literal"><span class="pre">default_tools</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=[&#8216;save&#8217;, &#8216;pan&#8217;, &#8216;wheel_zoom&#8217;, &#8216;box_zoom&#8217;, &#8216;resize&#8217;, &#8216;reset&#8217;], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>A list of plugin tools to use on the plot.</dd>
+<dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">height</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=300, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_dependent=False, time_fn=&lt;Time Time00001&gt;</em>)</dt>
+<dd>Height of the plot in pixels</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">show_legend</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to show legend for the plot.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">border</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=2, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_dependent=False, time_fn=&lt;Time Time00001&gt;</em>)</dt>
+<dd>Minimum border around plot.</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">shared_axes</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to invert the share axes across plots
+        for linked panning and zooming.</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">normalize</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to compute ranges across all Elements at this level
+        of plotting. Allows selecting normalization at different levels
+        for nested data containers.</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">apply_extents</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to apply extent overrides on the Elements</dd>
+<dt><em>param Dict</em> <tt class="docutils literal"><span class="pre">lod</span></tt> (<em>allow_None=False, constant=False, default={&#8216;threshold&#8217;: 2000, &#8216;interval&#8217;: 300, &#8216;timeout&#8217;: 500, &#8216;factor&#8217;: 10}, instantiate=True, is_instance=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Bokeh plots offer &#8220;Level of Detail&#8221; (LOD) capability to
+        accomodate large (but not huge) amounts of data. The available
+        options are:
+
+          * factor    - Decimation factor to use when applying
+                        decimation.
+          * interval  - Interval (in ms) downsampling will be enabled
+                        after an interactive event.
+          * threshold - Number of samples before downsampling is enabled.
+          * timeout   - Timeout (in ms) for checking whether interactive
+                        tool events are still occurring.</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">apply_ranges</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to compute the plot bounds from the data itself.</dd>
+<dt><em>param List</em> <tt class="docutils literal"><span class="pre">tools</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>A list of plugin tools to use on the plot.</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">invert_yaxis</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to invert the plot y-axis.</dd>
+<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">xticks</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Ticks along x-axis specified as an integer, explicit list of
+        tick locations or bokeh Ticker object. If set to None default
+        bokeh ticking behavior is applied.</dd>
+<dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">width</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=300, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_dependent=False, time_fn=&lt;Time Time00001&gt;</em>)</dt>
+<dd>Width of the plot in pixels</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">invert_xaxis</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to invert the plot x-axis.</dd>
+<dt><em>param ObjectSelector</em> <tt class="docutils literal"><span class="pre">xaxis</span></tt> (<em>allow_None=None, check_on_set=True, compute_default_fn=None, constant=False, default=left, instantiate=False, objects=[&#8216;left&#8217;, &#8216;right&#8217;, &#8216;bare&#8217;, &#8216;left-bare&#8217;, &#8216;right-bare&#8217;, None], pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether and where to display the xaxis, bare options allow
+        suppressing all axis labels including ticks and xlabel.</dd>
+<dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">yrotation</span></tt> (<em>allow_None=True, bounds=(0, 360), constant=False, default=None, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_dependent=False, time_fn=&lt;Time Time00001&gt;</em>)</dt>
+<dd>Rotation angle of the xticks.</dd>
+<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">fontsize</span></tt> (<em>allow_None=True, constant=False, default={&#8216;title&#8217;: &#8216;12pt&#8217;}, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Specifies various fontsizes of the displayed text.
+
+       Finer control is available by supplying a dictionary where any
+       unmentioned keys reverts to the default sizes, e.g:
+
+          {&#8216;ticks&#8217;: &#8216;20pt&#8217;, &#8216;title&#8217;: &#8216;15pt&#8217;, &#8216;ylabel&#8217;: &#8216;5px&#8217;, &#8216;xlabel&#8217;: &#8216;5px&#8217;}</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">show_title</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to display the plot title.</dd>
+<dt><em>param ObjectSelector</em> <tt class="docutils literal"><span class="pre">yaxis</span></tt> (<em>allow_None=None, check_on_set=True, compute_default_fn=None, constant=False, default=bottom, instantiate=False, objects=[&#8216;top&#8217;, &#8216;bottom&#8217;, &#8216;bare&#8217;, &#8216;top-bare&#8217;, &#8216;bottom-bare&#8217;, None], pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether and where to display the yaxis, bare options allow
+        suppressing all axis labels including ticks and ylabel.</dd>
+<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">bgcolor</span></tt> (<em>allow_None=False, constant=False, default=white, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Background color of the plot.</dd>
+<dt><em>param String</em> <tt class="docutils literal"><span class="pre">title_format</span></tt> (<em>allow_None=False, basestring=&lt;type &#8216;basestring&#8217;&gt;, constant=False, default={label} {group}, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>The formatting string for the title of this plot.</dd>
+<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">yticks</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Ticks along y-axis specified as an integer, explicit list of
+        tick locations or bokeh Ticker object. If set to None
+        default bokeh ticking behavior is applied.</dd>
+</dl>
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.compute_ranges">
+<tt class="descname">compute_ranges</tt><big>(</big><em>obj</em>, <em>key</em>, <em>ranges</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.compute_ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an object, a specific key and the normalization options
+this method will find the specified normalization options on
+the appropriate OptionTree, group the elements according to
+the selected normalization option (i.e. either per frame or
+over the whole animation) and finally compute the dimension
+ranges in each group. The new set of ranges is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.debug">
+<tt class="descname">debug</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print msg merged with args as a debugging statement.</p>
+<p>See Python&#8217;s logging module for details of message formatting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.defaults">
+<tt class="descname">defaults</tt><big>(</big><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return {parameter_name:parameter.default} for all non-constant
+Parameters.</p>
+<p>Note that a Parameter for which instantiate==True has its default
+instantiated.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.force_new_dynamic_value">
+<tt class="descname">force_new_dynamic_value</tt><em class="property"> = &lt;functools.partial object at 0x2b7734b7d7e0&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.force_new_dynamic_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.get_extents">
+<tt class="descname">get_extents</tt><big>(</big><em>view</em>, <em>ranges</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.get_extents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the extents for the axes from the current View. The globally
+computed ranges can optionally override the extents.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.get_param_values">
+<tt class="descname">get_param_values</tt><big>(</big><em>onlychanged=False</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.get_param_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of name,value pairs for all Parameters of this
+object.</p>
+<p>If onlychanged is True, will only return values that are not
+equal to the default value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.get_value_generator">
+<tt class="descname">get_value_generator</tt><em class="property"> = &lt;functools.partial object at 0x2b7734b7d788&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.get_value_generator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.initialize_plot">
+<tt class="descname">initialize_plot</tt><big>(</big><em>ranges=None</em>, <em>plot=None</em>, <em>plots=None</em>, <em>source=None</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.initialize_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a new plot object with the last available frame.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.inspect_value">
+<tt class="descname">inspect_value</tt><em class="property"> = &lt;functools.partial object at 0x2b7734b7d4c8&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.inspect_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.message">
+<tt class="descname">message</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print msg merged with args as a message.</p>
+<p>See Python&#8217;s logging module for details of message formatting.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.params">
+<em class="property">classmethod </em><tt class="descname">params</tt><big>(</big><em>parameter_name=None</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Parameters of this class as the
+dictionary {name: parameter_object}</p>
+<p>Includes Parameters from this class and its
+superclasses.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.pprint">
+<tt class="descname">pprint</tt><big>(</big><em>imports=None</em>, <em>prefix=' '</em>, <em>unknown_value='&lt;?&gt;'</em>, <em>qualify=False</em>, <em>separator=''</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.pprint" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Experimental) Pretty printed representation that may be
+evaluated with eval. See pprint() function for more details.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.print_param_defaults">
+<em class="property">classmethod </em><tt class="descname">print_param_defaults</tt><big>(</big><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.print_param_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the default values of all cls&#8217;s Parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.print_param_values">
+<tt class="descname">print_param_values</tt><big>(</big><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.print_param_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the values of all this object&#8217;s Parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.script_repr">
+<tt class="descname">script_repr</tt><big>(</big><em>imports=</em>, <span class="optional">[</span><span class="optional">]</span><em>prefix='    '</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.script_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variant of __repr__ designed for generating a runnable script.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.set_default">
+<em class="property">classmethod </em><tt class="descname">set_default</tt><big>(</big><em>param_name</em>, <em>value</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.set_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default value of param_name.</p>
+<p>Equivalent to setting param_name on the class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.set_dynamic_time_fn">
+<tt class="descname">set_dynamic_time_fn</tt><em class="property"> = &lt;functools.partial object at 0x2b7734b7d838&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.set_dynamic_time_fn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.set_param">
+<tt class="descname">set_param</tt><em class="property"> = &lt;functools.partial object at 0x2b7734b7d8e8&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.set_param" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.state">
+<tt class="descname">state</tt><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The plotting state that gets updated via the update method and
+used by the renderer to generate output.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.state_pop">
+<tt class="descname">state_pop</tt><big>(</big><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.state_pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore the most recently saved state.</p>
+<p>See state_push() for more details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.state_push">
+<tt class="descname">state_push</tt><big>(</big><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.state_push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save this instance&#8217;s state.</p>
+<p>For Parameterized instances, this includes the state of
+dynamically generated values.</p>
+<p>Subclasses that maintain short-term state should additionally
+save and restore that state using state_push() and
+state_pop().</p>
+<p>Generally, this method is used by operations that need to test
+something without permanently altering the objects&#8217; state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.update_frame">
+<tt class="descname">update_frame</tt><big>(</big><em>key</em>, <em>ranges=None</em>, <em>plot=None</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.update_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates an existing plot with data corresponding
+to the key.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.verbose">
+<tt class="descname">verbose</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print msg merged with args as a verbose message.</p>
+<p>See Python&#8217;s logging module for details of message formatting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="holoviews.plotting.bokeh.annotation.SplinePlot.warning">
+<tt class="descname">warning</tt><big>(</big><em>msg</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#holoviews.plotting.bokeh.annotation.SplinePlot.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print msg merged with args as a warning, unless module variable
+warnings_as_exceptions is True, then raise an Exception
+containing the arguments.</p>
+<p>See Python&#8217;s logging module for details of message formatting.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <hr class="docutils" />
 <div class="section" id="chart-module">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">chart</span></tt> Module<a class="headerlink" href="#chart-module" title="Permalink to this headline">¶</a></h2>
@@ -291,7 +551,7 @@ instantiated.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.element.BokehMPLWrapper.force_new_dynamic_value">
-<tt class="descname">force_new_dynamic_value</tt><em class="property"> = &lt;functools.partial object at 0x2abe2022e2b8&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.force_new_dynamic_value" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">force_new_dynamic_value</tt><em class="property"> = &lt;functools.partial object at 0x2b7732b39158&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.force_new_dynamic_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -321,12 +581,12 @@ equal to the default value.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.element.BokehMPLWrapper.get_value_generator">
-<tt class="descname">get_value_generator</tt><em class="property"> = &lt;functools.partial object at 0x2abe2022e260&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.get_value_generator" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_value_generator</tt><em class="property"> = &lt;functools.partial object at 0x2b7732b39100&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.get_value_generator" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.element.BokehMPLWrapper.inspect_value">
-<tt class="descname">inspect_value</tt><em class="property"> = &lt;functools.partial object at 0x2abe2022e368&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.inspect_value" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">inspect_value</tt><em class="property"> = &lt;functools.partial object at 0x2b7732b39208&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.inspect_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -379,12 +639,12 @@ evaluated with eval. See pprint() function for more details.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.element.BokehMPLWrapper.set_dynamic_time_fn">
-<tt class="descname">set_dynamic_time_fn</tt><em class="property"> = &lt;functools.partial object at 0x2abe2022e050&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.set_dynamic_time_fn" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">set_dynamic_time_fn</tt><em class="property"> = &lt;functools.partial object at 0x2b7732b390a8&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.set_dynamic_time_fn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.element.BokehMPLWrapper.set_param">
-<tt class="descname">set_param</tt><em class="property"> = &lt;functools.partial object at 0x2abe2022e470&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.set_param" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">set_param</tt><em class="property"> = &lt;functools.partial object at 0x2b7732b39310&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.element.BokehMPLWrapper.set_param" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -491,7 +751,7 @@ instantiated.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.BokehPlot.force_new_dynamic_value">
-<tt class="descname">force_new_dynamic_value</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fba2158&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.force_new_dynamic_value" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">force_new_dynamic_value</tt><em class="property"> = &lt;functools.partial object at 0x2b7731af2fc8&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.force_new_dynamic_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -514,7 +774,7 @@ equal to the default value.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.BokehPlot.get_value_generator">
-<tt class="descname">get_value_generator</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fba21b0&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.get_value_generator" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_value_generator</tt><em class="property"> = &lt;functools.partial object at 0x2b773e2f6050&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.get_value_generator" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -525,7 +785,7 @@ equal to the default value.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.BokehPlot.inspect_value">
-<tt class="descname">inspect_value</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fba2260&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.inspect_value" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">inspect_value</tt><em class="property"> = &lt;functools.partial object at 0x2b773e2f6100&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.inspect_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -578,12 +838,12 @@ evaluated with eval. See pprint() function for more details.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.BokehPlot.set_dynamic_time_fn">
-<tt class="descname">set_dynamic_time_fn</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fba2310&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.set_dynamic_time_fn" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">set_dynamic_time_fn</tt><em class="property"> = &lt;functools.partial object at 0x2b773e2f60a8&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.set_dynamic_time_fn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.BokehPlot.set_param">
-<tt class="descname">set_param</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fba2368&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.set_param" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">set_param</tt><em class="property"> = &lt;functools.partial object at 0x2b773e2f6208&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.BokehPlot.set_param" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -696,7 +956,7 @@ instantiated.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.GridPlot.force_new_dynamic_value">
-<tt class="descname">force_new_dynamic_value</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fb931b0&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.force_new_dynamic_value" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">force_new_dynamic_value</tt><em class="property"> = &lt;functools.partial object at 0x2b7731af2db8&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.force_new_dynamic_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -719,12 +979,12 @@ equal to the default value.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.GridPlot.get_value_generator">
-<tt class="descname">get_value_generator</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fb93208&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.get_value_generator" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_value_generator</tt><em class="property"> = &lt;functools.partial object at 0x2b773e303050&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.get_value_generator" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.GridPlot.inspect_value">
-<tt class="descname">inspect_value</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fb93260&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.inspect_value" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">inspect_value</tt><em class="property"> = &lt;functools.partial object at 0x2b773e303100&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.inspect_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -777,12 +1037,12 @@ evaluated with eval. See pprint() function for more details.</p>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.GridPlot.set_dynamic_time_fn">
-<tt class="descname">set_dynamic_time_fn</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fb93158&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.set_dynamic_time_fn" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">set_dynamic_time_fn</tt><em class="property"> = &lt;functools.partial object at 0x2b773e3030a8&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.set_dynamic_time_fn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="holoviews.plotting.bokeh.plot.GridPlot.set_param">
-<tt class="descname">set_param</tt><em class="property"> = &lt;functools.partial object at 0x2abe1fb93368&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.set_param" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">set_param</tt><em class="property"> = &lt;functools.partial object at 0x2b773e303208&gt;</em><a class="headerlink" href="#holoviews.plotting.bokeh.plot.GridPlot.set_param" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
