@@ -326,6 +326,9 @@
 </div></div>
 <span class="k">class</span> <span class="nc">LayoutPlot</span><span class="p">(</span><span class="n">BokehPlot</span><span class="p">,</span> <span class="n">GenericLayoutPlot</span><span class="p">):</span>
 
+    <span class="n">shared_axes</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        Whether axes should be shared across plots&quot;&quot;&quot;</span><span class="p">)</span>
+
     <span class="n">tabs</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        Whether to display overlaid plots in separate panes&quot;&quot;&quot;</span><span class="p">)</span>
 
@@ -454,8 +457,9 @@
         <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">:</span>
             <span class="n">subplot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplots</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="bp">None</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">subplot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">shared_plots</span> <span class="o">=</span> <span class="n">passed_plots</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_axes</span> <span class="k">else</span> <span class="bp">None</span>
                 <span class="n">plots</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subplot</span><span class="o">.</span><span class="n">initialize_plot</span><span class="p">(</span><span class="n">ranges</span><span class="o">=</span><span class="n">ranges</span><span class="p">,</span>
-                                                        <span class="n">plots</span><span class="o">=</span><span class="n">passed_plots</span><span class="p">))</span>
+                                                        <span class="n">plots</span><span class="o">=</span><span class="n">shared_plots</span><span class="p">))</span>
                 <span class="n">passed_plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plots</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">,</span> <span class="n">Layout</span><span class="p">):</span>
