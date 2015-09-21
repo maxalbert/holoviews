@@ -162,9 +162,22 @@
 <span class="sd">        operation may also be supplied.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">..operation</span> <span class="kn">import</span> <span class="n">histogram</span>
-        <span class="k">return</span> <span class="n">histogram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="n">num_bins</span><span class="p">,</span> <span class="n">bin_range</span><span class="o">=</span><span class="n">bin_range</span><span class="p">,</span> <span class="n">adjoin</span><span class="o">=</span><span class="n">adjoin</span><span class="p">,</span>
-                         <span class="n">individually</span><span class="o">=</span><span class="n">individually</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="n">dimension</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">dimension</span> <span class="o">=</span> <span class="p">[</span><span class="n">dimension</span><span class="p">]</span>
+        <span class="n">hists</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dimension</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">hist</span> <span class="o">=</span> <span class="n">histogram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="n">num_bins</span><span class="p">,</span> <span class="n">bin_range</span><span class="o">=</span><span class="n">bin_range</span><span class="p">,</span>
+                             <span class="n">adjoin</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">individually</span><span class="o">=</span><span class="n">individually</span><span class="p">,</span>
+                             <span class="n">dimension</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">hists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">adjoin</span><span class="p">:</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span>
+            <span class="k">for</span> <span class="n">didx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dimension</span><span class="p">)):</span>
+                <span class="n">layout</span> <span class="o">=</span> <span class="n">layout</span> <span class="o">&lt;&lt;</span> <span class="n">hists</span><span class="p">[</span><span class="n">didx</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimension</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">hists</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="n">hists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">layout</span>
 
     <span class="c">#======================#</span>
     <span class="c"># Subclassable methods #</span>
@@ -883,8 +896,13 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">hist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">bin_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">adjoin</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">individually</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">histmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">shared_data</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">hist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">bin_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">adjoin</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">individually</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+             <span class="n">dimension</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">dimension</span> <span class="o">=</span> <span class="p">[</span><span class="n">dimension</span><span class="p">]</span>
+
+        <span class="n">histmaps</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">shared_data</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimension</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">individually</span><span class="p">:</span>
             <span class="n">map_range</span> <span class="o">=</span> <span class="bp">None</span>
@@ -897,16 +915,22 @@
         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="p">(</span><span class="n">NdOverlay</span><span class="p">,</span> <span class="n">Overlay</span><span class="p">))</span> <span class="ow">and</span> <span class="s">&#39;index&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">histmap</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">adjoin</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">bin_range</span><span class="o">=</span><span class="n">bin_range</span><span class="p">,</span>
-                                <span class="n">individually</span><span class="o">=</span><span class="n">individually</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="n">num_bins</span><span class="p">,</span>
-                                <span class="n">style_prefix</span><span class="o">=</span><span class="n">style_prefix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">didx</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dimension</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">histmaps</span><span class="p">[</span><span class="n">didx</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">adjoin</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">bin_range</span><span class="o">=</span><span class="n">bin_range</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="n">d</span><span class="p">,</span>
+                                           <span class="n">individually</span><span class="o">=</span><span class="n">individually</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="n">num_bins</span><span class="p">,</span>
+                                           <span class="n">style_prefix</span><span class="o">=</span><span class="n">style_prefix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">adjoin</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="p">(</span><span class="n">NdOverlay</span><span class="p">,</span> <span class="n">Overlay</span><span class="p">)):</span>
-            <span class="n">layout</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span> <span class="o">&lt;&lt;</span> <span class="n">histmap</span><span class="p">)</span>
-            <span class="n">layout</span><span class="o">.</span><span class="n">main_layer</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">layout</span>
-
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span> <span class="o">&lt;&lt;</span> <span class="n">histmap</span><span class="p">)</span> <span class="k">if</span> <span class="n">adjoin</span> <span class="k">else</span> <span class="n">histmap</span>
+        <span class="k">if</span> <span class="n">adjoin</span><span class="p">:</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span>
+            <span class="k">for</span> <span class="n">didx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dimension</span><span class="p">)):</span>
+                <span class="n">layout</span> <span class="o">=</span> <span class="n">layout</span> <span class="o">&lt;&lt;</span> <span class="n">histmaps</span><span class="p">[</span><span class="n">didx</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="p">(</span><span class="n">NdOverlay</span><span class="p">,</span> <span class="n">Overlay</span><span class="p">)):</span>
+                <span class="n">layout</span><span class="o">.</span><span class="n">main_layer</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimension</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span><span class="n">histmaps</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="n">histmaps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">layout</span>
 
 </div>
 <div class="viewcode-block" id="GridSpace"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.html#holoviews.core.element.GridSpace">[docs]</a><span class="k">class</span> <span class="nc">GridSpace</span><span class="p">(</span><span class="n">UniformNdMapping</span><span class="p">):</span>
