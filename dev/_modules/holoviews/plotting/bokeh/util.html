@@ -177,7 +177,11 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Maps an array of values to RGB hex strings.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">arr</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">crange</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">crange</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">crange</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">crange</span><span class="p">:</span>
+        <span class="n">cmin</span><span class="p">,</span> <span class="n">cmax</span> <span class="o">=</span> <span class="n">crange</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cmin</span><span class="p">,</span> <span class="n">cmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">arr</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">cmin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">cmax</span><span class="o">-</span><span class="n">cmin</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">colors</span><span class="o">.</span><span class="n">rgb2hex</span><span class="p">(</span><span class="n">cmap</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;#FFFFFF&#39;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">]</span>
 
 </div>
