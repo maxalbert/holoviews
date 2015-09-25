@@ -326,7 +326,40 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s">&#39;artist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s">&#39;axis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="o">**</span><span class="n">style_opts</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_type</span> <span class="o">==</span> <span class="s">&quot;contour&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s">&#39;artist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s">&#39;axis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="o">**</span><span class="n">style_opts</span><span class="p">)</span>
-</pre></div></div>
+
+
+</div>
+<div class="viewcode-block" id="TrisurfacePlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.mpl.html#holoviews.plotting.mpl.chart3d.TrisurfacePlot">[docs]</a><span class="k">class</span> <span class="nc">TrisurfacePlot</span><span class="p">(</span><span class="n">Plot3D</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots a trisurface given a Trisurface element, containing</span>
+<span class="sd">    X, Y and Z coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">colorbar</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        Whether to add a colorbar to the plot.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cmap&#39;</span><span class="p">,</span> <span class="s">&#39;color&#39;</span><span class="p">,</span> <span class="s">&#39;shade&#39;</span><span class="p">,</span> <span class="s">&#39;linewidth&#39;</span><span class="p">,</span> <span class="s">&#39;edgecolor&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">initialize_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hmap</span><span class="o">.</span><span class="n">last</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">ranges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_ranges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hmap</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ranges</span><span class="p">)</span>
+        <span class="n">ranges</span> <span class="o">=</span> <span class="n">match_spec</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_handles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s">&#39;axis&#39;</span><span class="p">],</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_axis</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="n">ranges</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">update_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">style_opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cyclic_index</span><span class="p">]</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">vrange</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="n">dims</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dims</span><span class="p">]</span>
+        <span class="n">artist</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">plot_trisurf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vrange</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                   <span class="n">vmin</span><span class="o">=</span><span class="n">vrange</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">style_opts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s">&#39;artist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">artist</span></div>
+</pre></div>
 
           </div>
           <footer>

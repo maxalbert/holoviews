@@ -423,8 +423,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the gradient plot of the supplied Image.</span>
 
-<span class="sd">    If the Image value dimension is cyclic, negative differences will</span>
-<span class="sd">    be wrapped into the cyclic range.</span>
+<span class="sd">    If the Image value dimension is cyclic, the smallest step is taken</span>
+<span class="sd">    considered the cyclic range</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">output_type</span> <span class="o">=</span> <span class="n">Image</span>
@@ -442,19 +442,28 @@
 
         <span class="n">data</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">data</span>
         <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="k">if</span>  <span class="n">matrix_dim</span><span class="o">.</span><span class="n">cyclic</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">None</span> <span class="ow">in</span> <span class="n">matrix_dim</span><span class="o">.</span><span class="n">range</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Cyclic range must be specified to compute &quot;</span>
+                            <span class="s">&quot;the gradient of cyclic quantities&quot;</span><span class="p">)</span>
+        <span class="n">cyclic_range</span> <span class="o">=</span> <span class="bp">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">matrix_dim</span><span class="o">.</span><span class="n">cyclic</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">matrix_dim</span><span class="o">.</span><span class="n">range</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cyclic_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># shift values such that wrapping works ok</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">matrix_dim</span><span class="o">.</span><span class="n">range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
         <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">dy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="n">cyclic_range</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">matrix_dim</span><span class="o">.</span><span class="n">cyclic</span> <span class="k">else</span> <span class="n">matrix_dim</span><span class="o">.</span><span class="n">range</span>
         <span class="k">if</span> <span class="n">cyclic_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span> <span class="c"># Wrap into the specified range</span>
             <span class="c"># Convert negative differences to an equivalent positive value</span>
             <span class="n">dx</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">%</span> <span class="n">cyclic_range</span>
             <span class="n">dy</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">%</span> <span class="n">cyclic_range</span>
             <span class="c">#</span>
-            <span class="c"># Make it increase as gradient reaches the halfway point,</span>
-            <span class="c"># and decrease from there</span>
-            <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">cyclic_range</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dx</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">cyclic_range</span><span class="p">)</span>
-            <span class="n">dy</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">cyclic_range</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dy</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">cyclic_range</span><span class="p">)</span>
+            <span class="c"># Prefer small jumps</span>
+            <span class="n">dx_negatives</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">-</span> <span class="n">cyclic_range</span>
+            <span class="n">dy_negatives</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">-</span> <span class="n">cyclic_range</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dx_negatives</span><span class="p">)</span><span class="o">&lt;</span><span class="n">dx</span><span class="p">,</span> <span class="n">dx_negatives</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dy_negatives</span><span class="p">)</span><span class="o">&lt;</span><span class="n">dy</span><span class="p">,</span> <span class="n">dy_negatives</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">Image</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">dy</span><span class="p">),</span> <span class="n">matrix</span><span class="o">.</span><span class="n">bounds</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
 
