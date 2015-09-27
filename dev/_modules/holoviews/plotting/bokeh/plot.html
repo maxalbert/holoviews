@@ -588,16 +588,16 @@
 <span class="sd">        invoke subplots with correct options and styles and hide any</span>
 <span class="sd">        empty axes as necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">adjoined_plots</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;main&#39;</span><span class="p">,</span> <span class="s">&#39;right&#39;</span><span class="p">,</span> <span class="s">&#39;top&#39;</span><span class="p">]:</span>
             <span class="c"># Pos will be one of &#39;main&#39;, &#39;top&#39; or &#39;right&#39; or None</span>
             <span class="n">subplot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplots</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
             <span class="c"># If no view object or empty position, disable the axis</span>
             <span class="k">if</span> <span class="n">subplot</span><span class="p">:</span>
-                <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subplot</span><span class="o">.</span><span class="n">initialize_plot</span><span class="p">(</span><span class="n">ranges</span><span class="o">=</span><span class="n">ranges</span><span class="p">,</span> <span class="n">plots</span><span class="o">=</span><span class="n">plots</span><span class="p">))</span>
+                <span class="n">adjoined_plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subplot</span><span class="o">.</span><span class="n">initialize_plot</span><span class="p">(</span><span class="n">ranges</span><span class="o">=</span><span class="n">ranges</span><span class="p">,</span> <span class="n">plots</span><span class="o">=</span><span class="n">plots</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">drawn</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">plots</span><span class="p">:</span> <span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">plots</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">adjoined_plots</span><span class="p">:</span> <span class="n">adjoined_plots</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">adjoined_plots</span>
 
 
     <span class="k">def</span> <span class="nf">update_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
