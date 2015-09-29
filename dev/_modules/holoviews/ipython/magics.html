@@ -825,12 +825,11 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">elapsed_time</span><span class="p">():</span>
-        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span>  <span class="n">TimerMagic</span><span class="o">.</span><span class="n">start_time</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="n">elapsed</span> <span class="o">//</span> <span class="mi">60</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span>  <span class="n">TimerMagic</span><span class="o">.</span><span class="n">start_time</span>
+        <span class="n">minutes</span> <span class="o">=</span> <span class="n">seconds</span> <span class="o">//</span> <span class="mi">60</span>
         <span class="n">hours</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">//</span> <span class="mi">60</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">elapsed</span> <span class="o">%</span> <span class="mi">60</span>
-        <span class="k">return</span> <span class="s">&quot;Timer elapsed: </span><span class="si">%02d</span><span class="s">:</span><span class="si">%02d</span><span class="s">:</span><span class="si">%02d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">minutes</span><span class="p">,</span> <span class="n">seconds</span><span class="p">)</span>
-
+        <span class="k">return</span> <span class="s">&quot;Timer elapsed: </span><span class="si">%02d</span><span class="s">:</span><span class="si">%02d</span><span class="s">:</span><span class="si">%02d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">minutes</span> <span class="o">%</span> <span class="mi">60</span><span class="p">,</span> <span class="n">seconds</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
+                                    
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">option_completer</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span>
