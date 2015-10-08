@@ -133,6 +133,8 @@
 <span class="sd">also enables slicing over multiple dimension ranges.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span>
 <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
@@ -417,11 +419,10 @@
 </div>
 <div class="viewcode-block" id="MultiDimensionalMapping.add_dimension"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.html#holoviews.core.ndmapping.MultiDimensionalMapping.add_dimension">[docs]</a>    <span class="k">def</span> <span class="nf">add_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">dim_pos</span><span class="p">,</span> <span class="n">dim_val</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new object with an additional key dimensions along</span>
-<span class="sd">        which items are indexed. Requires the dimension name, the</span>
-<span class="sd">        desired position in the key dimensions and a key value that</span>
-<span class="sd">        will be used across the dimension. This is particularly useful</span>
-<span class="sd">        for merging several mappings together.</span>
+<span class="sd">        Create a new object with an additional key dimensions.</span>
+<span class="sd">        Requires the dimension name or object, the desired position</span>
+<span class="sd">        in the key dimensions and a key value scalar or sequence of</span>
+<span class="sd">        the same length as the existing keys.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">dimension</span> <span class="o">=</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">dimension</span><span class="p">)</span>
@@ -432,10 +433,16 @@
         <span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span><span class="p">[:]</span>
         <span class="n">dimensions</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">dim_pos</span><span class="p">,</span> <span class="n">dimension</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dim_val</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">dim_val</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Added dimension values must be same length&quot;</span>
+                             <span class="s">&quot;as existing keys.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dim_val</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">([</span><span class="n">dim_val</span><span class="p">])</span>
+
         <span class="n">items</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">dval</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dim_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="n">new_key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-            <span class="n">new_key</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">dim_pos</span><span class="p">,</span> <span class="n">dim_val</span><span class="p">)</span>
+            <span class="n">new_key</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">dim_pos</span><span class="p">,</span> <span class="n">dval</span><span class="p">)</span>
             <span class="n">items</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">new_key</span><span class="p">)]</span> <span class="o">=</span> <span class="n">val</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">dimensions</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
